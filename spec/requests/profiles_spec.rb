@@ -1,13 +1,31 @@
 require 'spec_helper'
 
 describe "Profiles" do
+  describe "POST /profiles" do
+    it "creates a profile" do
+      pending
+    end
+  end
+
+  describe "POST /profiles/:id" do
+    it "updates profile" do
+      pending
+    end
+  end
+
+  describe "DELETE /profiles/:id" do
+    it "deletes profile" do
+      pending
+    end
+  end
+
   describe "GET /profiles/:id" do
     it "returns the correct profile" do
       profile1 = create(:profile)
       get "/profiles/#{profile1.id}", {}, { "Accept" => "application/json" }
 
       expect(response.status).to eq(200)
-      body = JSON.parse(response.body)
+      body = JSON.parse(response.body)["profile"]
       expect(body["id"]).to eq(profile1.id)
       expect(body["description"]).to eq(profile1.description)
       expect(body["display_name"]).to eq(profile1.display_name)
@@ -28,7 +46,7 @@ describe "Profiles" do
       get "/profiles/", {}, { "Accept" => "application/json" }
 
       expect(response.status).to eq(200)
-      body = JSON.parse(response.body)
+      body = JSON.parse(response.body)["profiles"]
       expect(body.length).to eq(5)
       expect(body.map { |p| p['id'] }).to match_array(Profile.all.pluck(:id))
     end
