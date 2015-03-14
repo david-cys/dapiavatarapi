@@ -1,13 +1,17 @@
 class ProfilesController < ApplicationController
   def index
-    @profiles = Profile.all
-    render json: @profiles
+    if params.has_key?(:query)
+      @profiles = Profile.search(params[:query])
+    else
+      @profiles = Profile.all
+    end
+    render json: @profiles, root: "data"
   end
 
   def show
     begin
       @profile = Profile.find(params[:id])
-      render json: @profile
+      render json: @profile, root: "data"
     rescue ActiveRecord::StatementInvalid
       render_404
     rescue ActiveRecord::RecordNotFound

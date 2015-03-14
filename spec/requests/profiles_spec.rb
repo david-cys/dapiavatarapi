@@ -25,7 +25,7 @@ describe "Profiles" do
       get "/profiles/#{profile1.id}", {}, { "Accept" => "application/json" }
 
       expect(response.status).to eq(200)
-      body = JSON.parse(response.body)["profile"]
+      body = JSON.parse(response.body)["data"]
       expect(body["id"]).to eq(profile1.id)
       expect(body["description"]).to eq(profile1.description)
       expect(body["display_name"]).to eq(profile1.display_name)
@@ -46,9 +46,23 @@ describe "Profiles" do
       get "/profiles/", {}, { "Accept" => "application/json" }
 
       expect(response.status).to eq(200)
-      body = JSON.parse(response.body)["profiles"]
+      body = JSON.parse(response.body)["data"]
       expect(body.length).to eq(5)
       expect(body.map { |p| p['id'] }).to match_array(Profile.all.pluck(:id))
+    end
+  end
+
+  describe "GET profiles with query arguments" do
+    it "allows searching and filtering of profiles" do
+      5.times { create(:profile) }
+      get "/profiles", { :query => Profile.last.display_name },
+        { "Accept" => "application/json" }
+
+      expect(response.status).to eq(200)
+      body = JSON.parse(response.body)["data"]
+      expect(body.length).to eq(1)
+      expect(body.map { |p| p['display_name'] }).
+        to match_array([Profile.last.display_name])
     end
   end
 end

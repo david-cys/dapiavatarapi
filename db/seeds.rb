@@ -12,3 +12,18 @@
     email: "testemail#{i}@example.com",
   )
 end
+Profile.create(
+  description: "apples desc",
+  display_name: "mr apples",
+  email: "apples@example.com",
+)
+Profile.create(
+  description: "pears desc",
+  display_name: "mr pears fruits",
+  email: "pears@example.com",
+)
+Profile.create(
+  description: "oranges desc",
+  display_name: "mr oranges fruits",
+  email: "oranges@example.com",
+)
