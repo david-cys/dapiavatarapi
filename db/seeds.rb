@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+5.times do |i|
+  Profile.create(
+    description: "Placeholder description #{i}",
+    display_name: "Placeholder Display Name #{i}",
+    email: "testemail#{i}@example.com",
+  )
+end
