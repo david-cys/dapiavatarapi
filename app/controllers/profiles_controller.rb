@@ -1,4 +1,15 @@
 class ProfilesController < ApplicationController
+  def create
+    @profile = Profile.new(:display_name => params["display_name"],
+                           :description => params["description"],
+                           :email => params["email"])
+    if @profile.save
+      render json: @profile, root: "data"
+    else
+      render text: "Bad request", status: 400
+    end
+  end
+
   def index
     if params.has_key?(:query)
       @profiles = Profile.search(params[:query])

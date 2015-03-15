@@ -3,7 +3,30 @@ require 'spec_helper'
 describe "Profiles" do
   describe "POST /profiles" do
     it "creates a profile" do
-      pending
+      profile_count = Profile.count
+      post "/profiles",
+        { "display_name" => "create name",
+          "description" => "create description",
+          "email" => "create@example.com" },
+        {"Accept" => "application/json" }
+
+      expect(response.status).to eq(200)
+      expect(Profile.count).to eq(profile_count + 1)
+      body = JSON.parse(response.body)["data"]
+      puts body
+      expect(body["description"]).to eq("create description")
+      expect(body["display_name"]).to eq("create name")
+      expect(body["email"]).to eq("create@example.com")
+    end
+
+    it "returns 400 error if not saved" do
+      profile_count = Profile.count
+      post "/profiles",
+        { "display_name" => "create name",
+          "description" => "create description"},
+        {"Accept" => "application/json" }
+      expect(response.status).to eq(400)
+      expect(Profile.count).to eq(profile_count)
     end
   end
 
