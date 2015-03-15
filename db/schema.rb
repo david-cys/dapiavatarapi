@@ -18,12 +18,4 @@ ActiveRecord::Schema.define(version: 20150314090422) do
   enable_extension "hstore"
   enable_extension "uuid-ossp"
 
-  create_table "profiles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.text     "description"
-    t.text     "display_name"
-    t.text     "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
 end

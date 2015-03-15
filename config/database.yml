@@ -6,7 +6,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: dapi_development
+  database: dapiavatar_development
   pool: 5
   username: kapi
   password: password
@@ -17,7 +17,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: dapi_test
+  database: dapiavatar_test
   pool: 5
   username: kapi
   password: password
@@ -25,7 +25,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: dapi_production
+  database: dapiavatar_production
   pool: 5
   username: kapi
   password: password
