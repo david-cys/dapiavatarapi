@@ -31,6 +31,7 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 gem 'active_model_serializers', '~> 0.9' # json output formatting
+gem 'aws-sdk', '~> 1.5.7'
 gem 'paperclip', '~> 4.2'
 
 group :doc do
