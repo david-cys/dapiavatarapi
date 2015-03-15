@@ -29,6 +29,7 @@ class AvatarsController < ApplicationController
     begin
       @avatar = Avatar.order(created_at: :desc).
         find_by(profile_uuid: params[:profile_uuid])
+      raise ActiveRecord::RecordNotFound if @avatar.nil?
       render json: @avatar, root: "data"
     rescue ActiveRecord::StatementInvalid
       render_404
