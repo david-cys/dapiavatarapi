@@ -1,8 +1,10 @@
 class ProfilesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def create
-    @profile = Profile.new(:display_name => params["display_name"],
-                           :description => params["description"],
-                           :email => params["email"])
+    @profile = Profile.new(:display_name => params["profile"]["display_name"],
+                           :description => params["profile"]["description"],
+                           :email => params["profile"]["email"])
     if @profile.save
       render json: @profile, root: "data"
     else
@@ -30,4 +32,3 @@ class ProfilesController < ApplicationController
     end
   end
 end
-
