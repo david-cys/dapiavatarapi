@@ -2,24 +2,43 @@ class AvatarsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    # @profile = Profile.new(:display_name => params["profile"]["display_name"],
-    #                        :description => params["profile"]["description"],
-    #                        :email => params["profile"]["email"])
-    # if @profile.save
-    #   render json: @profile, root: "data"
-    # else
-    #   render text: "Bad request", status: 400
-    # end
+    @avatar = Avatar.new(avatar_params)
+    if @avatar.save
+      render json: @avatar, root: "data"
+    else
+      render text: "Bad request", status: 400
+    end
   end
 
   def show
-    # begin
-    #   @profile = Profile.find(params[:id])
-    #   render json: @profile, root: "data"
-    # rescue ActiveRecord::StatementInvalid
-    #   render_404
-    # rescue ActiveRecord::RecordNotFound
-    #   render_404
-    # end
+    begin
+      if params.has_key?("profile_uuid")
+        @avatar = Avatar.find_by(profile_uuid: params["profile_uuid"])
+      else
+        @avatar = Avatar.find(params[:id])
+      end
+      render json: @avatar, root: "data"
+    rescue ActiveRecord::StatementInvalid
+      render_404
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
+  end
+
+  def show_latest
+    begin
+      @avatar = Avatar.order(created_at: :desc).
+        find_by(profile_uuid: params[:profile_uuid])
+      render json: @avatar, root: "data"
+    rescue ActiveRecord::StatementInvalid
+      render_404
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
+  end
+
+  private
+  def avatar_params
+    params.require(:avatar).permit(:image, :profile_uuid)
   end
 end
